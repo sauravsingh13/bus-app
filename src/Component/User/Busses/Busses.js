@@ -31,6 +31,7 @@ const busses = (props) => props.bussesList.map((bus)=>{
     destinationTime={bus.destinationTime}
     price={bus.price}
     key={bus.busName}
+    book={props.book}
     />)
 })
 

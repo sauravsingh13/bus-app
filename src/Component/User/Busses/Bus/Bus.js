@@ -16,7 +16,7 @@ const bus = (props) =>(
             </div>
           <div className="bus_right">
           <p style={{marginBottom:'0%'}}>Price=₹{props.price}</p>
-          <Button color="success">Book Now</Button>
+          <Button color="success" onClick={()=>props.book(props.busName)}>Book Now</Button>
           </div>
         </CardBody>
     </Card>
