@@ -1,114 +1,142 @@
 import React from 'react';
-import { InputGroup, Input } from 'reactstrap';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Button, Row, Col,Container } from 'reactstrap';
-import classnames from 'classnames';
+
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { MsgBox } from '../Utility/MsgBox';
+import Aux from '../../Hoc/Aux/Aux'
 
+//Actions
+import { findUser, findAdmin } from '../../Store/action/login'; 
 
-
-export default class Login extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
-    
-        this.toggle = this.toggle.bind(this);
-        this.user = this.user.bind(this);
-        this.admin = this.admin.bind(this);
         this.state = {
-          activeTab: '1',
-          adminAccess: false,
-          userAccess: false
+            username: '',
+            password: '',
+            adUserName: '',
+            adPassword: '',
+            userClass:"nav-item nav-link active",
+            adminClass:"nav-item nav-link",
+            admin:false,
         };
-      }
+        this.user = this.user.bind(this);
+        this.register = this.register.bind(this);
+        this.admin = this.admin.bind(this);
+    }
+    adminTab=()=>{
+        this.setState({adminClass:"nav-item nav-link active",
+        userClass:"nav-item nav-link",admin:true})
+    }
+    userTab=()=>{
+      this.setState({adminClass:"nav-item nav-link",
+      userClass:"nav-item nav-link active",admin:false})    }
     
-      toggle(tab) {
-        if (this.state.activeTab !== tab) {
-          this.setState({
-            activeTab: tab
-          });
-        }
-      }
-      admin(){
-          this.setState({adminAccess:true})
-      }
-      user(){
-        this.setState({userAccess:true})
+    handleUserInput(e){
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value});
+    }
+    admin(){
+        //this.setState({adminAccess:true});
+        const { adUserName, adPassword } = this.state;
+        this.props.checkAdmin({"username": adUserName, "password": adPassword});
+    }
+    user(){
+        const { username, password } = this.state;
+        this.props.checkUser({"username": username, "password": password});
+        //this.setState({userAccess:true});
+    }
+    register(){
+        console.log("registration");
+        this.props.history.push('/register');
     }
     render(){
+        const _props = {
+            msg: "Username or Password are Invalid", 
+            type: "Warning",
+            className: "alert alert-warning"
+        }
+        if (this.props.user.hasOwnProperty("adminAccess") &&  this.props.user.adminAccess === true) {
+            return <Redirect to='/admin' />
+        }
+        if (this.props.user.userAccess === true) {
+            return <Redirect to='/user' />
+        }
         const style = {
             
-            marginTop: '10%'
-          };
-        const styleCursor = {
-            cursor: 'pointer'
+            marginTop:"20px"
         }
-        if (this.state.adminAccess === true) {
-            return <Redirect to='/admin' />
-          }
-          if (this.state.userAccess === true) {
-            return <Redirect to='/user' />
-          }
+        const tab = {
+            cursor:"pointer"
+        }
+        let adminUserToggle=null;
+        if(!this.state.admin){
+            adminUserToggle = (<Aux>
+                <div class="offset-md-4 col-md-4 ">
+            <input style={style} type="text" placeholder="User Name" 
+             onChange={ (event) => this.handleUserInput(event)} name="username"class="form-control"/>
+            </div>
+            <div class="offset-md-4 col-md-4 ">
+            <input  style={style} type="password" placeholder="Password" 
+            name="password" class="form-control" onChange={ (event) => this.handleUserInput(event)} /><br/>
+            <button type="button" style={{margin:"20px"}} onClick={this.register}  class="btn btn-primary">Register</button>
+            <button type="button" style={{margin:"20px"}} onClick={this.user} class="btn btn-success">Login</button>
+            { this.props.user.login  === "Failed" ?
+                            <MsgBox {..._props}></MsgBox>
+                        : null }
+            </div>
+            </Aux>  )
+        }
+        else{
+            adminUserToggle = (<Aux>
+                <div class="offset-md-4 col-md-4 ">
+            <input style={style} type="text" placeholder="Admin Name" 
+            name="adUserName" onChange={ (event) => this.handleUserInput(event)}class="form-control"/>
+            </div>
+            <div class="offset-md-4 col-md-4 ">
+            <input  style={style} type="password" placeholder="Password" 
+            name="adPassword" onChange={ (event) => this.handleUserInput(event)} class="form-control" /><br/>
+            <button type="button" style={style}  onClick={this.admin} class="btn btn-primary">Secure Login</button>
+            { this.props.user.login === "Failed" ?
+                            <MsgBox {..._props}></MsgBox>
+                        : null }
+            </div>
+            </Aux>  )
+        }
         return(
-            <Container style={style}>
-            <Row>
-                <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '1' })}
-              onClick={() => { this.toggle('1'); }} style={styleCursor}
-            >
-              USER
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '2' })}
-              onClick={() => { this.toggle('2'); }} style={styleCursor}
-            >
-              ADMIN
-            </NavLink>
-          </NavItem>
-        </Nav>
-                </Col>
-            </Row><br/>
-               <TabContent activeTab={this.state.activeTab}>
-                   <TabPane tabId="1">
-                   <Row>
-                <Col sm="12" md={{ size: 6, offset: 3 }}><InputGroup>
-                    <Input placeholder="username" />
-                    </InputGroup>
-                </Col>
-            </Row><br/>
-            <Row>
-                <Col sm="12" md={{ size: 6, offset: 3 }}><InputGroup>
-                    <Input type="password" placeholder="password" />
-                    </InputGroup>
-                </Col>
-            </Row><br/>
-                
-            <Button color="success" onClick={this.user}>Login</Button>
-                   </TabPane>
-                   <TabPane tabId="2">
-                   <Row>
-                <Col sm="12" md={{ size: 6, offset: 3 }}><InputGroup>
-                    <Input placeholder="admin name" />
-                    </InputGroup>
-                </Col>
-            </Row><br/>
-            <Row>
-                <Col sm="12" md={{ size: 6, offset: 3 }}><InputGroup>
-                    <Input type="password" placeholder="password" />
-                    </InputGroup>
-                </Col>
-            </Row><br/>
-                
-            <Button color="primary" onClick={this.admin}>Admin Login</Button>
-                   </TabPane>
-               </TabContent>
-           
-            </Container>
-            
-
+            <Aux>
+                <div className="row">
+                <div class="offset-md-4 col-md-4 ">
+                    <nav  style={style}>
+                        <div class="nav nav-tabs">
+                            <span class={this.state.userClass} style={tab} onClick={this.userTab}>User</span>
+                            <span class={this.state.adminClass} style={tab} onClick={this.adminTab}>Admin</span>
+                        </div>
+                    </nav>               
+                </div>
+                </div>
+                <div className="row">
+                {adminUserToggle}
+                </div>
+            </Aux>
         )
+        
     }
 }
+
+const mapStateToProps = (state) => ({
+    "user" : state.user 
+})
+const mapDispatchToProps = dispatch => {
+    return {
+      checkUser: user => {
+        dispatch(findUser(user));
+      },
+      checkAdmin: admin => {
+          dispatch(findAdmin(admin));
+      }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
