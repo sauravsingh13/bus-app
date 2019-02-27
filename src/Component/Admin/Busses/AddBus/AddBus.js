@@ -89,44 +89,44 @@ class addBus extends Component {
     
     render(){
         let cities = this.state.cities.map((city)=>{
+            console.log(city)
             return(<option value={city.cityName} key={city._id}>{city.cityName}</option>)
         });
-        
         return (
             <div className="Addbus">
-                <label for="fromCity">From City:</label>
+                <label htmlFor="fromCity">From City:</label>
                 <select  name="fromCity" 
                 onChange={(event) => this.handleUserInput(event)}>
                 <option value="" selected></option>
                 {cities}</select>
-                <label for="toCity">To City:</label>
+                <label htmlFor="toCity">To City:</label>
                 <select  name="toCity" onChange={(event) => this.handleUserInput(event)} >
                 <option value="" selected></option>
                 {cities}</select><br/>
-                <label for="name">Bus Name:</label>
+                <label htmlFor="name">Bus Name:</label>
                 <input type="text" 
                 onChange={(event) => this.handleUserInput(event)} value={this.state.name}
                 name="name" placeholder="Name"/>
-                <label for="duration">Duration:</label>
+                <label htmlFor="duration">Duration:</label>
                 <input type="number" 
                 onChange={(event) => this.handleUserInput(event)} value={this.state.duration}
                 name="duration" placeholder="Duration Time"/><br/>
                 <textarea onChange={(event) => this.handleUserInput(event)}
                 value={this.state.description} placeholder="Description"
                 className="form-control" rows="5" id="comment" name="description"></textarea>
-                <label for="fromCityTime">Source Time:</label>
+                <label htmlFor="fromCityTime">Source Time:</label>
                 <input type="text" 
                 onChange={(event) => this.handleUserInput(event)} value={this.state.fromCityTime}
                 name="fromCityTime" placeholder="Source Time"/>
-                <label for="toCityTime">Destination Time:</label>
+                <label htmlFor="toCityTime">Destination Time:</label>
                 <input type="text" 
                 onChange={(event) => this.handleUserInput(event)} value={this.state.toCityTime}
                 name="toCityTime" placeholder="Destination Time"/><br/>
-                <label for="price">Price:</label>
+                <label htmlFor="price">Price:</label>
                 <input type="number" 
                 onChange={(event) => this.handleUserInput(event)} value={this.state.price}
                 name="price" placeholder="Price"/>
-                <label for="totalSeats">Total row of seats in Bus:</label>
+                <label htmlFor="totalSeats">Total row of seats in Bus:</label>
                 <input type="number" 
                 onChange={(event) => this.handleUserInput(event)} 
                 name="totalSeats" placeholder="Total row of seats in Bus"/><br/><br/>

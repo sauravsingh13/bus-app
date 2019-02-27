@@ -1,11 +1,12 @@
 import React from 'react'
 import Bus from './Bus/Bus'
-import Aux from '../../../Hoc/Aux/Aux'
+import Aux from '../../../Hoc/Auxs/Auxs'
 import './Busses.css'
 
 
 
 const busses = (props) => {
+    console.log(props)
     let bussesList=props.bussesList.map((bus)=>(
         <Bus busName={bus.name} 
     busDescription={bus.description} 
@@ -36,7 +37,7 @@ const busses = (props) => {
       </div>
       
     </div>
-        {bussesList}
+        {props.bussesList.length > 0 ? bussesList : <span>No Bus Found</span>}
     </Aux>
     )
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { MsgBox } from '../Utility/MsgBox';
-import Aux from '../../Hoc/Aux/Aux'
+import Aux from '../../Hoc/Auxs/Auxs'
 
 //Actions
 import { findUser, findAdmin } from '../../Store/action/login'; 
@@ -73,15 +73,15 @@ class Login extends React.Component {
         let adminUserToggle=null;
         if(!this.state.admin){
             adminUserToggle = (<Aux>
-                <div class="offset-md-4 col-md-4 ">
+                <div className="offset-md-4 col-md-4 ">
             <input style={style} type="text" placeholder="User Name" 
-             onChange={ (event) => this.handleUserInput(event)} name="username"class="form-control"/>
+             onChange={ (event) => this.handleUserInput(event)} name="username"className="form-control"/>
             </div>
-            <div class="offset-md-4 col-md-4 ">
+            <div className="offset-md-4 col-md-4 ">
             <input  style={style} type="password" placeholder="Password" 
-            name="password" class="form-control" onChange={ (event) => this.handleUserInput(event)} /><br/>
-            <button type="button" style={{margin:"20px"}} onClick={this.register}  class="btn btn-primary">Register</button>
-            <button type="button" style={{margin:"20px"}} onClick={this.user} class="btn btn-success">Login</button>
+            name="password" className="form-control" onChange={ (event) => this.handleUserInput(event)} /><br/>
+            <button type="button" style={{margin:"20px"}} onClick={this.register}  className="btn btn-primary">Register</button>
+            <button type="button" style={{margin:"20px"}} onClick={this.user} className="btn btn-success">Login</button>
             { this.props.user.login  === "Failed" ?
                             <MsgBox {..._props}></MsgBox>
                         : null }
@@ -90,14 +90,14 @@ class Login extends React.Component {
         }
         else{
             adminUserToggle = (<Aux>
-                <div class="offset-md-4 col-md-4 ">
+                <div className="offset-md-4 col-md-4 ">
             <input style={style} type="text" placeholder="Admin Name" 
-            name="adUserName" onChange={ (event) => this.handleUserInput(event)}class="form-control"/>
+            name="adUserName" onChange={ (event) => this.handleUserInput(event)}className="form-control"/>
             </div>
-            <div class="offset-md-4 col-md-4 ">
+            <div className="offset-md-4 col-md-4 ">
             <input  style={style} type="password" placeholder="Password" 
-            name="adPassword" onChange={ (event) => this.handleUserInput(event)} class="form-control" /><br/>
-            <button type="button" style={style}  onClick={this.admin} class="btn btn-primary">Secure Login</button>
+            name="adPassword" onChange={ (event) => this.handleUserInput(event)} className="form-control" /><br/>
+            <button type="button" style={style}  onClick={this.admin} className="btn btn-primary">Secure Login</button>
             { this.props.user.login === "Failed" ?
                             <MsgBox {..._props}></MsgBox>
                         : null }
@@ -107,11 +107,11 @@ class Login extends React.Component {
         return(
             <Aux>
                 <div className="row">
-                <div class="offset-md-4 col-md-4 ">
+                <div className="offset-md-4 col-md-4 ">
                     <nav  style={style}>
-                        <div class="nav nav-tabs">
-                            <span class={this.state.userClass} style={tab} onClick={this.userTab}>User</span>
-                            <span class={this.state.adminClass} style={tab} onClick={this.adminTab}>Admin</span>
+                        <div className="nav nav-tabs">
+                            <span className={this.state.userClass} style={tab} onClick={this.userTab}>User</span>
+                            <span className={this.state.adminClass} style={tab} onClick={this.adminTab}>Admin</span>
                         </div>
                     </nav>               
                 </div>

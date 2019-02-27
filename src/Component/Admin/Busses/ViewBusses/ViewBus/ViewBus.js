@@ -1,6 +1,6 @@
 import React from 'react'
 import './ViewBus.css'
-import Aux from '../../../../../Hoc/Aux/Aux'
+import Aux from '../../../../../Hoc/Auxs/Auxs'
 
 
 const viewBus = (props) =>{

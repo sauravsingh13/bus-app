@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import Aux from '../../../../Hoc/Aux/Aux'
+import Aux from '../../../../Hoc/Auxs/Auxs'
 import axios from 'axios';
 import { MsgBox } from '../../../Utility/MsgBox';
 

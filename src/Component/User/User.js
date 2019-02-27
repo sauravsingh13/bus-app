@@ -1,16 +1,11 @@
 import React from 'react'
-import { Row,Col,Container
-   } from 'reactstrap';
 import './User.css'
 import axios from 'axios';
 import Busses from './Busses/Busses'
 import Search from './Search/Search'
 import SeatSelection from './SeatSelection/SeatSelection'
-import Backdrop from './Backdrop/Backdrop'
+import Backdrop from '../Utility/Backdrop/Backdrop'
 import ConfirmBooking from './ConfirmBooking/ConfirmBooking'
-
-
-
 
 export default class User extends React.Component {
     state={
@@ -34,7 +29,7 @@ export default class User extends React.Component {
     searchBuses=(source,destination,date)=>{
       console.log(source,destination,date)
      let bus=this.state.busses.filter((bus)=>
-        source===bus.fromCity  && destination===bus.toCity
+     source.toLowerCase()===bus.fromCity.toLowerCase()  && destination.toLowerCase()===bus.toCity.toLowerCase()
       )
       this.setState({bus:bus})
     }
@@ -100,9 +95,9 @@ export default class User extends React.Component {
                 <Backdrop show={this.state.SeatSelection} ><SeatSelection cancel={this.cancelBooking}
                 seatStatus={this.state.seatStatus} confirmSeat={this.confirmSeat}/></Backdrop>
                 <Backdrop show={this.state.confirmSeat} ><ConfirmBooking seatBooked={this.state.seatBooked} 
-                cancel={this.cancelBooking} proceedToPayment={this.proceedToPayment}/></Backdrop>
+                cancel={this.cancelBooking} proceedToPayment={this.proceedToPayment}/></Backdrop>               
                 <h1>WELCOME USER</h1>
-                <div  class="container">
+                <div  className="container">
                   <div className="row">
                     <div  className="col-md-12" >
                       <Search search={this.searchBuses}/>

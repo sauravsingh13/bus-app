@@ -1,6 +1,6 @@
 import React from 'react'
 import './Bus.css'
-import Aux from '../../../../Hoc/Aux/Aux'
+import Aux from '../../../../Hoc/Auxs/Auxs'
 
 
 const bus = (props) =>{
@@ -12,7 +12,6 @@ const bus = (props) =>{
   }
   return(
     <Aux>
-
     <div className="row bus">
       <div className="col-md-3"><p className="BusDetail">{props.busName}</p><p>{props.busDescription}</p></div>
       <div className="col-md-3 " style={{margin:"auto"}}>
