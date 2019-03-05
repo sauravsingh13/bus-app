@@ -85,6 +85,10 @@ export default class User extends React.Component {
       console.log(newSeatStatus)
       this.setState({SeatSelection:false})
       this.setState({confirmSeat:false})
+	     axios.post("http://localhost:8080/mail/",{
+        seatBooked:this.state.seatBooked,
+      }).then(response=>console.log("MAIL SENT"))
+      .catch(error=>console.log(error))
       alert('PAYMENT SUCCESSFILL')
     }
     render(){
