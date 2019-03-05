@@ -17,6 +17,7 @@ var usersRouter = require('./routes/user');
 var registerRouter = require('./routes/registration');
 var cityRouter = require('./routes/cities')
 var busRouter = require('./routes/busses')
+var mailRouter = require('./routes/mail')
 
 
 // view engine setup
@@ -47,6 +48,8 @@ app.use('/login', usersRouter);
 app.use('/register', registerRouter);
 app.use('/city',cityRouter)
 app.use('/bus',busRouter)
+app.use('/mail', mailRouter)
+
 
 app.get("*", function(req, res, next){
   res.sendFile(path.join(__dirname, 'build/index.html'))  
